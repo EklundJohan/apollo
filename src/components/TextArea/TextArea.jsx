@@ -11,7 +11,7 @@ const propTypes = {
   innerRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.object,
-    PropTypes.string
+    PropTypes.string,
   ]),
   maxLength: PropTypes.string,
   name: PropTypes.string,
@@ -41,19 +41,14 @@ const defaultProps = {
   value: undefined,
 };
 
-const TextArea = (props) => {
-  const {
-    className,
-    columns,
-    innerRef,
-    resize: Resize,
-    ...other
-  } = props;
-
-  const classes = classNames(
-    className,
-    styles.textarea,
-  );
+const TextArea = ({
+  className,
+  columns,
+  innerRef,
+  resize: Resize,
+  ...other
+}) => {
+  const classes = classNames(className, styles.textarea);
 
   return (
     <textarea

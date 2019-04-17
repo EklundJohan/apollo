@@ -13,21 +13,9 @@ const defaultProps = {
   tag: 'p',
 };
 
-const CardText = (props) => {
-  const {
-    className,
-    tag: Tag,
-    ...other
-  } = props;
-
-  const classes = classNames(
-    className,
-    styles['card-text'],
-  );
-
-  return (
-    <Tag {...other} className={classes} />
-  );
+const CardText = ({ className, tag: Tag, ...other }) => {
+  const classes = classNames(className, styles['card-text']);
+  return <Tag {...other} className={classes} />;
 };
 
 CardText.propTypes = propTypes;

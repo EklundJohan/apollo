@@ -7,62 +7,66 @@ const propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.node,
-    PropTypes.string
+    PropTypes.string,
   ]),
   className: PropTypes.string,
-  onClose: PropTypes.func,
+  color: PropTypes.oneOf(['primary', 'secondary']),
+  icon: PropTypes.string,
+  onToggle: PropTypes.func,
+  open: PropTypes.bool,
 };
 
 const defaultProps = {
   children: undefined,
   className: undefined,
-  onClose: undefined,
+  color: 'secondary',
+  icon: undefined,
+  onToggle: undefined,
+  open: true,
 };
 
 class Tag extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
   }
 
-  handleClose(e) {
-    if (!this.props.onClose) {
+  handleToggle(e) {
+    const { onToggle } = this.props;
+    if (!onToggle) {
       return;
     }
-
-    this.props.onClose(e);
+    onToggle(e);
   }
 
   render() {
     const {
       children,
       className,
-      onClose
+      color,
+      icon,
+      onToggle,
+      open,
+      ...other
     } = this.props;
 
-    const classes = classNames(
-      className,
-      styles.tag
-    );
-
-    let closeButton = null;
-    if (onClose) {
-      closeButton = (
-        <button
-          area-label="Close"
-          className={classNames(styles.close)}
-          onClick={this.handleClose}
-          type="button"
-        />
-      );
+    if (!open) {
+      return null;
     }
 
+    const classes = classNames(className, styles.tag, styles[`tag-${color}`]);
+
     return (
-      <span className={classes}>
-        <span className={classNames(styles['tag-text'])}>
-          {children}
-        </span>
-        {closeButton}
+      <span {...other} className={classes}>
+        {icon && <img alt="" className={styles['tag-icon']} src={icon} />}
+        <span className={styles['tag-text']}>{children}</span>
+        {onToggle && (
+          <button
+            className={styles.close}
+            onClick={this.handleToggle}
+            type="button"
+          />
+        )}
       </span>
     );
   }

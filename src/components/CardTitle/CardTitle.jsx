@@ -13,21 +13,9 @@ const defaultProps = {
   tag: 'h5',
 };
 
-const CardTitle = (props) => {
-  const {
-    className,
-    tag: Tag,
-    ...other
-  } = props;
-
-  const classes = classNames(
-    className,
-    styles['card-title'],
-  );
-
-  return (
-    <Tag {...other} className={classes} />
-  );
+const CardTitle = ({ className, tag: Tag, ...other }) => {
+  const classes = classNames(className, styles['card-title']);
+  return <Tag {...other} className={classes} />;
 };
 
 CardTitle.propTypes = propTypes;

@@ -31,34 +31,31 @@ class DropdownToggle extends React.Component {
   }
 
   handleClick(e) {
-    if (this.props.disabled) {
+    const { disabled, onClick } = this.props;
+    const { onToggle } = this.context;
+
+    if (disabled) {
       e.preventDefault();
       return;
     }
 
-    if (this.props.onClick) {
-      this.props.onClick(e);
+    if (onClick) {
+      onClick(e);
     }
 
-    this.context.onToggle(e);
+    onToggle(e);
   }
 
   render() {
-    const {
-      active,
-      className,
-      disabled,
-      tag: Tag,
-      ...other
-    } = this.props;
+    const { active, className, disabled, tag: Tag, ...other } = this.props;
 
     const { open } = this.context;
 
     const classes = classNames(
       className,
       styles['dropdown-toggle'],
-      (active || open) ? styles.active : '',
-      (disabled) ? styles.disabled : '',
+      active || open ? styles.active : '',
+      disabled ? styles.disabled : '',
     );
 
     return (

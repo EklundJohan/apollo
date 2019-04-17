@@ -4,21 +4,21 @@ import classNames from 'classnames';
 import * as styles from './Mention.css';
 
 const propTypes = {
-  children: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node,
+    PropTypes.string,
+  ]),
 };
 
 const defaultProps = {
-  children: undefined
+  children: undefined,
 };
 
-const Mention = (props) => {
+const Mention = props => {
   const classes = classNames(styles.mention);
-
-  return (
-    <span className={classes} {...props} />
-  );
+  return <span className={classes} {...props} />;
 };
-
 
 Mention.propTypes = propTypes;
 Mention.defaultProps = defaultProps;

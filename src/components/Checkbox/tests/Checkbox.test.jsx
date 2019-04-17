@@ -1,4 +1,4 @@
-/* global define, describe, it, expect, jest */
+/* global describe, it, expect, jest */
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import Checkbox from '../Checkbox';

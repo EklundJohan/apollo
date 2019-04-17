@@ -25,6 +25,10 @@ const defaultProps = {
   tag: 'button',
 };
 
+const contextTypes = {
+  onToggle: PropTypes.func,
+};
+
 class DropdownItem extends React.Component {
   constructor(props) {
     super(props);
@@ -32,33 +36,31 @@ class DropdownItem extends React.Component {
   }
 
   handleClick(e) {
-    if (this.props.disabled) {
+    const { onClick, disabled } = this.props;
+    const { onToggle } = this.context;
+
+    if (disabled) {
       e.preventDefault();
       return;
     }
 
-    if (this.props.onClick) {
-      this.props.onClick(e);
+    if (onClick) {
+      onClick(e);
+    }
+
+    if (onToggle) {
+      onToggle(e);
     }
   }
 
   render() {
-    const {
-      active,
-      className,
-      header,
-      href,
-      separator,
-      ...other
-    } = this.props;
+    const { active, className, header, href, separator, ...other } = this.props;
 
-    let {
-      tag: Tag
-    } = this.props;
+    let { tag: Tag } = this.props;
 
     const classes = classNames(
       className,
-      (!header && !separator) ? styles['dropdown-item'] : '',
+      !header && !separator ? styles['dropdown-item'] : '',
       header ? styles['dropdown-header'] : '',
       separator ? styles['dropdown-separator'] : '',
       active ? styles.active : '',
@@ -87,5 +89,6 @@ class DropdownItem extends React.Component {
 
 DropdownItem.propTypes = propTypes;
 DropdownItem.defaultProps = defaultProps;
+DropdownItem.contextTypes = contextTypes;
 
 export default DropdownItem;

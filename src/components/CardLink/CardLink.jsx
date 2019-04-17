@@ -5,10 +5,7 @@ import * as styles from './CardLink.css';
 
 const propTypes = {
   className: PropTypes.string,
-  tag: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.string,
-  ]),
+  tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 };
 
 const defaultProps = {
@@ -16,21 +13,9 @@ const defaultProps = {
   tag: 'a',
 };
 
-const CardLink = (props) => {
-  const {
-    className,
-    tag: Tag,
-    ...other
-  } = props;
-
-  const classes = classNames(
-    className,
-    styles['card-link'],
-  );
-
-  return (
-    <Tag {...other} className={classes} />
-  );
+const CardLink = ({ className, tag: Tag, ...other }) => {
+  const classes = classNames(className, styles['card-link']);
+  return <Tag {...other} className={classes} />;
 };
 
 CardLink.propTypes = propTypes;

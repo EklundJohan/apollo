@@ -5,16 +5,8 @@ import * as styles from './CardImage.css';
 
 const propTypes = {
   className: PropTypes.string,
-  placement: PropTypes.oneOf([
-    'top',
-    'right',
-    'bottom',
-    'left',
-  ]),
-  tag: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.string
-  ]),
+  placement: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
+  tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 };
 
 const defaultProps = {
@@ -23,23 +15,14 @@ const defaultProps = {
   tag: 'img',
 };
 
-const CardImage = (props) => {
-  const {
-    className,
-    placement,
-    tag: Tag,
-    ...other
-  } = props;
-
+const CardImage = ({ className, placement, tag: Tag, ...other }) => {
   const classes = classNames(
     className,
     styles['card-image'],
     placement ? styles[`card-image-${placement}`] : '',
   );
 
-  return (
-    <Tag {...other} className={classes} />
-  );
+  return <Tag {...other} className={classes} />;
 };
 
 CardImage.propTypes = propTypes;

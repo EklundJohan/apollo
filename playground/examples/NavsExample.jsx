@@ -18,7 +18,7 @@ class NavbarExample extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container style={{ marginBottom: '50px', marginTop: '50px' }}>
         <h1>Navs</h1>
         <h3>Horizontal</h3>
         <h4>Left-aligned</h4>
@@ -114,7 +114,14 @@ class NavbarExample extends React.Component {
             <NavLink>Link</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink active={!this.state.collapsed} onClick={() => { this.setState(prevState => ({ collapsed: !prevState.collapsed })); }}>
+            <NavLink
+              active={!this.state.collapsed}
+              onClick={() => {
+                this.setState(prevState => ({
+                  collapsed: !prevState.collapsed,
+                }));
+              }}
+            >
               Toggle
             </NavLink>
             <Nav collapsed={this.state.collapsed} vertical>
@@ -187,4 +194,3 @@ class NavbarExample extends React.Component {
 }
 
 export default NavbarExample;
-

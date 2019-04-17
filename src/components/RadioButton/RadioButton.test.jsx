@@ -1,7 +1,6 @@
-/* global define, it, describe, expect, jest */
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import RadioButton from '../RadioButton';
+import RadioButton from './RadioButton';
 
 describe('<RadioButton />', () => {
   describe('onChange()', () => {

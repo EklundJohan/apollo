@@ -35,14 +35,16 @@ class Dropdown extends React.Component {
   }
 
   getChildContext() {
+    const { onToggle, open } = this.props;
     return {
-      onToggle: this.props.onToggle,
-      open: this.props.open,
+      onToggle,
+      open,
     };
   }
 
   componentDidMount() {
-    if (this.props.open) {
+    const { open } = this.props;
+    if (open) {
       this.addEventListeners();
     } else {
       this.removeEventListeners();
@@ -50,8 +52,9 @@ class Dropdown extends React.Component {
   }
 
   componentDidUpdate(previousProps) {
-    if (this.props.open !== previousProps.open) {
-      if (this.props.open) {
+    const { open } = this.props;
+    if (open !== previousProps.open) {
+      if (open) {
         this.addEventListeners();
       } else {
         this.removeEventListeners();
@@ -64,15 +67,15 @@ class Dropdown extends React.Component {
   }
 
   addEventListeners() {
-    ['click'].forEach(event => (
-      document.addEventListener(event, this.handleDocumentClick, true)
-    ));
+    ['click'].forEach(event =>
+      document.addEventListener(event, this.handleDocumentClick, true),
+    );
   }
 
   removeEventListeners() {
-    ['click'].forEach(event => (
-      document.removeEventListener(event, this.handleDocumentClick, true)
-    ));
+    ['click'].forEach(event =>
+      document.removeEventListener(event, this.handleDocumentClick, true),
+    );
   }
 
   handleDocumentClick(e) {
@@ -85,30 +88,26 @@ class Dropdown extends React.Component {
   }
 
   handleToggle(e) {
-    if (this.props.disabled) {
+    const { disabled, onToggle } = this.props;
+    if (disabled) {
       e.preventDefault();
       return;
     }
 
-    this.props.onToggle(e);
+    onToggle(e);
   }
 
   render() {
-    const {
-      className,
-      tag: Tag,
-      ...other
-    } = this.props;
+    const { className, tag: Tag, ...other } = this.props;
 
-    const classes = classNames(
-      className,
-      styles.dropdown,
-    );
+    const classes = classNames(className, styles.dropdown);
 
     return (
       <Tag
         {...other}
-        ref={(node) => { this.node = node; }}
+        ref={node => {
+          this.node = node;
+        }}
         className={classes}
       />
     );

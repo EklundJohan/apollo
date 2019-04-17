@@ -9,16 +9,13 @@ class BasicDropdown extends React.Component {
   }
 
   handleToggle() {
-    this.setState({ open: !this.state.open });
+    this.setState(prevState => ({ open: !prevState.open }));
   }
 
   render() {
+    const { open } = this.state;
     return (
-      <Dropdown
-        {...this.props}
-        onToggle={this.handleToggle}
-        open={this.state.open}
-      />
+      <Dropdown {...this.props} onToggle={this.handleToggle} open={open} />
     );
   }
 }

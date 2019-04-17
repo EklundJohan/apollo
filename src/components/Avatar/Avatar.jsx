@@ -5,20 +5,16 @@ import * as styles from './Avatar.css';
 
 const propTypes = {
   className: PropTypes.string,
+  initials: PropTypes.string,
   name: PropTypes.string,
-  size: PropTypes.oneOf([
-    'x-small',
-    'small',
-    'medium',
-    'large',
-    'x-large',
-  ]),
+  size: PropTypes.oneOf(['x-small', 'small', 'medium', 'large', 'x-large']),
   src: PropTypes.string,
   tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 };
 
 const defaultProps = {
   className: undefined,
+  initials: undefined,
   name: undefined,
   size: 'medium',
   src: undefined,
@@ -29,7 +25,6 @@ class Avatar extends React.Component {
   constructor(props) {
     super(props);
     this.handleError = this.handleError.bind(this);
-    this.getInitials = this.getInitials.bind(this);
     this.state = { error: false };
   }
 
@@ -38,29 +33,14 @@ class Avatar extends React.Component {
     this.setState({ error: false });
   }
 
-  getInitials() {
-    const { name } = this.props;
-    const parts = name.split(' ');
-    let result = '';
-    for (let i = 0; i < parts.length; i++) {
-      result += parts[i].substr(0, 1).toUpperCase();
-    }
-
-    return result.slice(0, 2);
-  }
-
   handleError() {
     this.setState({ error: true });
   }
 
   render() {
-    const {
-      className,
-      name,
-      size,
-      tag: Tag,
-      ...other
-    } = this.props;
+    const { error } = this.state;
+    let { initials } = this.props;
+    const { className, name, size, tag: Tag, ...other } = this.props;
 
     const classes = classNames(
       className,
@@ -68,22 +48,25 @@ class Avatar extends React.Component {
       styles[`avatar-${size}`],
     );
 
-    if (this.state.error) {
+    if (name) {
+      const parts = name.split(' ');
+      let result = '';
+      for (let i = 0; i < parts.length; i += 1) {
+        result += parts[i].substr(0, 1).toUpperCase();
+      }
+
+      initials = result.slice(0, 2);
+    }
+
+    if (error) {
       return (
         <div className={classes}>
-          <span>{this.getInitials()}</span>
+          <span>{initials}</span>
         </div>
       );
     }
 
-    return (
-      <Tag
-        {...other}
-        alt={name}
-        className={classes}
-        onError={this.handleError}
-      />
-    );
+    return <Tag {...other} className={classes} onError={this.handleError} />;
   }
 }
 
